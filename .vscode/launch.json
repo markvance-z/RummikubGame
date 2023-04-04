@@ -1,0 +1,91 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Table",
+            "request": "launch",
+            "mainClass": "application.Table",
+            "projectName": "RummikubJava_6a8197e"
+        },
+        {
+            "type": "java",
+            "name": "Tiles",
+            "request": "launch",
+            "mainClass": "application.Tiles",
+            "projectName": "RummikubJava_6a8197e"
+        },
+        {
+            "type": "java",
+            "name": "TicTacToe",
+            "request": "launch",
+            "mainClass": "IntroStuff.TicTacToe",
+            "projectName": "RummikubJava_6a8197e",
+            "vmArgs": "--module-path \"c:\\Program Files\\Java\\javafx-sdk-20\\lib\" --add-modules javafx.controls,javafx.graphics,javafx.base,javafx.fxml,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "FontDemo",
+            "request": "launch",
+            "mainClass": "IntroStuff.FontDemo",
+            "projectName": "RummikubJava_6a8197e",
+            "vmArgs": "--module-path \"c:\\Program Files\\Java\\javafx-sdk-20\\lib\" --add-modules javafx.controls,javafx.graphics,javafx.base,javafx.fxml,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "NodeStyleRotateDemo",
+            "request": "launch",
+            "mainClass": "IntroStuff.NodeStyleRotateDemo",
+            "projectName": "RummikubJava_6a8197e",
+            "vmArgs": "--module-path \"c:\\Program Files\\Java\\javafx-sdk-20\\lib\" --add-modules javafx.controls,javafx.graphics,javafx.base,javafx.fxml,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "BidirectionalBindingDemo",
+            "request": "launch",
+            "mainClass": "IntroStuff.BidirectionalBindingDemo",
+            "projectName": "RummikubJava_6a8197e"
+        },
+        {
+            "type": "java",
+            "name": "BindingDemo",
+            "request": "launch",
+            "mainClass": "IntroStuff.BindingDemo",
+            "projectName": "RummikubJava_6a8197e"
+        },
+        {
+            "type": "java",
+            "name": "ShowCircleCentered",
+            "request": "launch",
+            "mainClass": "IntroStuff.ShowCircleCentered",
+            "projectName": "RummikubJava_6a8197e",
+            "vmArgs": "--module-path \"c:\\Program Files\\Java\\javafx-sdk-20\\lib\" --add-modules javafx.controls,javafx.graphics,javafx.base,javafx.fxml,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "ShowCircle",
+            "request": "launch",
+            "mainClass": "IntroStuff.ShowCircle",
+            "projectName": "RummikubJava_6a8197e",
+            "vmArgs": "--module-path \"c:\\Program Files\\Java\\javafx-sdk-20\\lib\" --add-modules javafx.controls,javafx.graphics,javafx.base,javafx.fxml,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "MyJavaFX",
+            "request": "launch",
+            "mainClass": "MyJavaFX",
+            "projectName": "RummikubJava_6a8197e",
+            "vmArgs": "--module-path \"c:\\Program Files\\Java\\javafx-sdk-20\\lib\" --add-modules javafx.controls,javafx.graphics,javafx.base,javafx.fxml,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "vmArgs": "--module-path \"c:\\Program Files\\Java\\javafx-sdk-20\\lib\" --add-modules javafx.controls,javafx.graphics,javafx.base,javafx.fxml,javafx.media,javafx.swing,javafx.web"
+        }
+    ]
+}
