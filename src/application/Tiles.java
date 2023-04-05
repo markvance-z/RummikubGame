@@ -17,7 +17,7 @@ public class Tiles {
         }
         tiles.add(new Tile(null, 0)); // add two joker tiles
         tiles.add(new Tile(null, 0));
-        //Collections.shuffle(tiles); // shuffle the tiles
+        Collections.shuffle(tiles); // shuffle the tiles
     }
 
     public ArrayList<Tile> getTiles() {
@@ -35,18 +35,33 @@ public class Tiles {
 }
 
 enum Color {
-    RED, BLUE, YELLOW, BLACK
+    RED, BLUE, YELLOW, BLACK;
+
+    public static Color fromString(String str) {
+        switch (str.toLowerCase()) {
+            case "red":
+                return RED;
+            case "blue":
+                return BLUE;
+            case "yellow":
+                return YELLOW;
+            case "black":
+                return BLACK;    
+            default:
+                throw new IllegalArgumentException("Invalid color string: " + str);
+        }
+    }
 }
 
 class Tile {
-    private Color color;
+    private application.Color color;
     private int number;
 
     public Tile(Color color, int number) {
         this.color = color;
         this.number = number;
-    }
 
+    }
     public Color getColor() {
         return color;
     }
@@ -54,4 +69,15 @@ class Tile {
     public int getNumber() {
         return number;
     }
+
+    // Override the toString method to return a string representation of the tile
+    @Override
+    public String toString() {
+        return "Tile{" +
+                ", number=" + number +
+                ", color=" + color +
+                '}';
+    }
+
 }
+
