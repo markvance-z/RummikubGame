@@ -1,52 +1,100 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class TileGUI extends Application {
-    //private static final int TILE_SIZE = 50;
     private ArrayList<Tile> tiles;
+    private ArrayList<Tile> hand;
+
+    private TilePane handPane;
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Tile GUI");
+        BorderPane root = new BorderPane();
 
         // create the tiles
         Tiles rummikub = new Tiles();
         tiles = rummikub.getTiles();
+        Collections.shuffle(tiles);
 
-        // create a panel to hold the tiles
-        FlowPane pane = new FlowPane();
-        pane.setHgap(10); // set horizontal gap between buttons
-        pane.setVgap(10); // set vertical gap between buttons
-        pane.setPadding(new Insets(10)); // add padding around the pane
-        
-        // add each tile to the panel
-        for (Tile tile : tiles) {
-            Button button = new Button(); // create a button
-            button.setText(String.valueOf(tile.getNumber())); // set the button text to the tile's value
-            button.setTextFill(getColorFromTile(tile)); // set the button text color to the tile's color
-            button.setStyle("-fx-background-color: lightgrey;"); // set the button background to light grey
-            button.setPrefSize(50, 60); // set the button size
-            pane.getChildren().add(button); // add the button to the panel
-        }
+        hand = new ArrayList<>();
 
-        Scene scene = new Scene(pane, 1080, 720);
+        // create a label to display the drawn tile
+        Label drawnTileLabel = new Label();
+
+        // create a button to draw a tile
+        Button drawButton = new Button("Draw");
+        drawButton.setOnAction(e -> {
+            if (tiles.size() > 0) {
+                Tile tile = tiles.remove(0);
+                hand.add(tile);
+                drawnTileLabel.setText("Drawn tile: " + tile.toString());
+                displayHand();
+            }
+        });
+
+        // create a button to reset the game
+        Button resetButton = new Button("Reset");
+        resetButton.setOnAction(e -> {
+            tiles.addAll(hand);
+            hand.clear();
+            Collections.shuffle(tiles);
+            drawnTileLabel.setText("");
+            displayHand();
+        });
+
+        // create an HBox to hold the buttons
+        HBox buttonBox = new HBox(10);
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.getChildren().addAll(drawButton, resetButton);
+
+        // create a TilePane to display the hand
+        handPane = new TilePane();
+        handPane.setPadding(new Insets(10));
+        handPane.setHgap(10);
+        handPane.setVgap(10);
+        displayHand();
+
+        // add the components to the root pane
+        root.setTop(drawnTileLabel);
+        root.setCenter(handPane);
+        root.setBottom(buttonBox);
+
+        // create the scene and show the stage
+        Scene scene = new Scene(root, 1080, 720);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Tile GUI");
         primaryStage.show();
+    }
+
+    private void displayHand() {
+        handPane.getChildren().clear();
+        for (Tile tile : hand) {
+            Button button = new Button();
+            button.setText(String.valueOf(tile.getNumber()));
+            button.setTextFill(getColorFromTile(tile));
+            button.setStyle("-fx-background-color: lightgray");
+            button.setPrefSize(50, 60);
+            handPane.getChildren().add(button);
+        }
     }
 
     // helper method to get the color of a tile as a Color object
     private static Color getColorFromTile(Tile tile) {
         if (tile.getColor() == null) {
-            return Color.MAGENTA; // default color if tile color is null
+            return Color.MAGENTA;
         }
         switch (tile.getColor()) {
             case RED:

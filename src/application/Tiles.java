@@ -18,6 +18,7 @@ public class Tiles {
         tiles.add(new Tile(null, 0)); // add two joker tiles
         tiles.add(new Tile(null, 0));
         Collections.shuffle(tiles); // shuffle the tiles
+
     }
 
     public ArrayList<Tile> getTiles() {
