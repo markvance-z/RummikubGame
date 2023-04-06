@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class Tiles {
     private static final int NUM_TILES = 106;
     private ArrayList<Tile> tiles;
@@ -18,21 +19,21 @@ public class Tiles {
         tiles.add(new Tile(null, 0)); // add two joker tiles
         tiles.add(new Tile(null, 0));
         Collections.shuffle(tiles); // shuffle the tiles
-
     }
 
     public ArrayList<Tile> getTiles() {
         return tiles;
-    }
-    
+    }   
+
     //Print tiles to check integrity.
-    //public static void main(String[] args) {
-    //    Tiles rummikub = new Tiles();
-    //    ArrayList<Tile> tiles = rummikub.getTiles();
-    //    for (Tile tile : tiles) {
-    //        System.out.println(tile.getColor() + " " + tile.getNumber());
-    //    }
-    //}
+    public void checkTiles() {
+        Tiles rummikub = new Tiles();
+        ArrayList<Tile> tiles = rummikub.getTiles();
+        System.out.println("Tiles Remaining: " + tiles.size());  
+        //for (Tile tile : tiles) {
+        //    System.out.println(tile.getColor() + " " + tile.getNumber());
+        //}
+    }
 }
 
 enum Color {
@@ -55,7 +56,7 @@ enum Color {
 }
 
 class Tile {
-    private application.Color color;
+    private Color color;
     private int number;
 
     public Tile(Color color, int number) {
@@ -79,6 +80,4 @@ class Tile {
                 ", color=" + color +
                 '}';
     }
-
 }
-
