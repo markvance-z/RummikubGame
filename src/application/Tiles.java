@@ -3,10 +3,9 @@ package application;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 public class Tiles {
     private static final int NUM_TILES = 106;
-    private ArrayList<Tile> tiles;
+    ArrayList<Tile> tiles;
 
     public Tiles() {
         tiles = new ArrayList<Tile>(NUM_TILES);
@@ -26,7 +25,7 @@ public class Tiles {
     }   
 
     //Print tiles to check integrity.
-    public void checkTiles() {
+    public static void checkTiles() {
         Tiles rummikub = new Tiles();
         ArrayList<Tile> tiles = rummikub.getTiles();
         System.out.println("Tiles Remaining: " + tiles.size());  
