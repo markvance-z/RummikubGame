@@ -12,6 +12,7 @@ public class ButtonsAndText {
     private int currentPlayerIndex = 1;
     Text currentPlayerText;
     Text tilesRemainText;
+    int gameStarted = 0;
     public static Pane root = new Pane();
     private ArrayList<Tile> tiles;
     private ArrayList<TileBox> tileBoxes = new ArrayList<>();
@@ -24,6 +25,7 @@ public class ButtonsAndText {
     };
 
     public void startGame() {
+        gameStarted = 1;
         Tiles rummikub = new Tiles();
         tiles = rummikub.getTiles();
         if(!tiles.isEmpty()) {
@@ -45,18 +47,20 @@ public class ButtonsAndText {
     }
 
     public void drawTile() {
-        // check if there are any tiles left in the ArrayList
-        if (!tiles.isEmpty()) {
-            Tile tile = tiles.remove(0); // remove the first tile from the ArrayList
-            TileBox tileBox = new TileBox(tile, tileBoxes);
-            Point drawPosition = drawPositions[currentPlayerIndex-1];
-            tileBox.setTranslateX(drawPosition.getX());
-            tileBox.setTranslateY(drawPosition.getY());
-            root.getChildren().add(tileBox);
-            tileBoxes.add(tileBox);
-            System.out.println("Player "+ currentPlayerIndex + " has drawn a tile");
-            checkTiles(); // call checkTiles() method to print the number of remaining tiles
-            soundPlayer.tileSound();
+        if (gameStarted == 1) {
+            // check if there are any tiles left in the ArrayList
+            if (!tiles.isEmpty()) {
+                Tile tile = tiles.remove(0); // remove the first tile from the ArrayList
+                TileBox tileBox = new TileBox(tile, tileBoxes);
+                Point drawPosition = drawPositions[currentPlayerIndex - 1];
+                tileBox.setTranslateX(drawPosition.getX());
+                tileBox.setTranslateY(drawPosition.getY());
+                root.getChildren().add(tileBox);
+                tileBoxes.add(tileBox);
+                System.out.println("Player " + currentPlayerIndex + " has drawn a tile");
+                checkTiles(); // call checkTiles() method to print the number of remaining tiles
+                soundPlayer.tileSound();
+            }
         }
     }
 
@@ -88,20 +92,20 @@ public class ButtonsAndText {
         int x = 0, y = 0;
         switch (playerIndex) {
             case 0: // Bottom
-                x = 120 + 30 * tileIndex;
-                y = 690;
+                x = 240 + 30 * tileIndex;
+                y = 785;
                 break;
             case 1: // Right
-                x = 520;
-                y = 630 - 40 * tileIndex;
+                x = 785;
+                y = 690 - 40 * tileIndex;
                 break;
             case 2: // Top
-                x = 460 - 30 * tileIndex;
-                y = 60;
+                x = 630 - 30 * tileIndex;
+                y = 75;
                 break;
             case 3: // Left
-                x = 60;
-                y = 120 + 40 * tileIndex;
+                x = 85;
+                y = 170 + 40 * tileIndex;
                 break;
         }
         return new Point(x, y);

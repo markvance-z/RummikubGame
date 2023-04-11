@@ -28,6 +28,13 @@ public class TileBox extends Pane {
         background.setArcWidth(10);
         background.setArcHeight(10);
         background.setFill(Color.GREY);
+        background.setOnMouseEntered(event -> {
+            background.setStroke(Color.YELLOW); // set the stroke color to yellow when the mouse enters
+        });
+    
+        background.setOnMouseExited(event -> {
+            background.setStroke(null); // set the stroke color back to null when the mouse exits
+        });
         setOnMousePressed(mousePressedHandler);
         setOnMouseDragged(mouseDraggedHandler);
         setOnMouseReleased(mouseReleasedHandler);
@@ -39,6 +46,17 @@ public class TileBox extends Pane {
         tileText.setText(String.valueOf(tile.getNumber()));
         tileText.setFill(getColorFromTile(tile)); // set text color to tile color
         tileText.setFont(Font.font(null, FontWeight.BOLD, 15)); // set font size to 12 bold
+        tileText.setOnMouseEntered(event -> {
+            getParent().setOnMouseEntered(background.getOnMouseEntered());
+            getParent().setOnMouseExited(background.getOnMouseExited());
+            background.getOnMouseEntered().handle(event);
+        });
+        
+        tileText.setOnMouseExited(event -> {
+            getParent().setOnMouseEntered(null);
+            getParent().setOnMouseExited(null);
+            background.getOnMouseExited().handle(event);
+        });
 
         getChildren().add(background);
         getChildren().add(tileText);
