@@ -12,17 +12,21 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-public class TileBox extends Pane {
+public class TileBox extends Pane implements Comparable<TileBox> {
     private SoundPlayer soundPlayer = new SoundPlayer();
     private boolean isDragging = false;
     private Point2D dragOffset;
     private Text tileText;
-    //private GameGUI gameGUI = new GameGUI();
+    private int number;
     private ArrayList<TileBox> tileBoxes = new ArrayList<>();
+    private Tile tile;
+    private int ownerIndex;
 
-    public TileBox(Tile tile, ArrayList<TileBox> tileBoxes) {
+    public TileBox(Tile tile, ArrayList<TileBox> tileBoxes, int ownerIndex) {
+        number = tile.getNumber();
         this.tileBoxes = tileBoxes;
         this.tileBoxes.add(this);
+        this.ownerIndex = ownerIndex;
         setPrefSize(30, 40);
         Rectangle background = new Rectangle(30, 40);
         background.setArcWidth(10);
@@ -62,6 +66,22 @@ public class TileBox extends Pane {
         getChildren().add(tileText);
     }
 
+    public Tile getTile() {
+        return tile; //getter method for the Tile object
+    }
+    public int getOwnerIndex() {
+        //System.out.println("Owner index: " + ownerIndex);
+        return ownerIndex;
+    }
+    public void setOwnerIndex(int i) {
+
+    }
+
+    @Override
+    public int compareTo(TileBox other) {
+        return Integer.compare(number, other.number);
+    }
+
     // helper method to get the color of a tile as a Color object
     private static Color getColorFromTile(Tile tile) {
         if (tile.getColor() == null) {
@@ -99,4 +119,5 @@ public class TileBox extends Pane {
         isDragging = false;
         soundPlayer.tileSound();
     };
+
 }

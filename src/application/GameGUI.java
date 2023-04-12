@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -80,8 +82,8 @@ public class GameGUI extends Application {
         */
 
         // Add buttons to a VBox
-        Button addButton = new Button("Draw Tile");
-        addButton.setOnAction(event -> buttonsAndText.drawTile());
+        Button drawTileButton = new Button("Draw Tile");
+        drawTileButton.setOnAction(event -> buttonsAndText.drawTile());
 
         Button resetButton = new Button("Reset Game");
         resetButton.setOnAction(event -> buttonsAndText.resetGame());
@@ -92,8 +94,14 @@ public class GameGUI extends Application {
         Button nextPlayerButton = new Button("Next Player");
         nextPlayerButton.setOnAction(event -> buttonsAndText.nextPlayer());
 
+        Button sortTilesButton = new Button("Sort Tiles");
+        sortTilesButton.setOnAction(event -> {
+            ArrayList<Tile> currentPlayerHand = buttonsAndText.getCurrentPlayerHand();
+            buttonsAndText.sortPlayerTiles(currentPlayerHand);
+        });
+
         //Player actions box
-        VBox actionButtonBox = new VBox(10, addButton, nextPlayerButton);
+        VBox actionButtonBox = new VBox(10, drawTileButton, sortTilesButton, nextPlayerButton);
         actionButtonBox.setAlignment(Pos.TOP_LEFT);
         actionButtonBox.setPadding(new Insets(10));
         actionButtonBox.setLayoutX(780);
@@ -106,11 +114,12 @@ public class GameGUI extends Application {
         gameButtonBox.setLayoutX(780);
         gameButtonBox.setLayoutY(5);
 
-        // Add text to a VBox
+        //Current Player Index
         buttonsAndText.currentPlayerText = new Text();
         buttonsAndText.currentPlayerText.setFill(Color.BLACK);
         buttonsAndText.currentPlayerText.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 18));
 
+        //Tiles Remain Text
         buttonsAndText.tilesRemainText = new Text();
         buttonsAndText.tilesRemainText.setFill(Color.BLACK);
         buttonsAndText.tilesRemainText.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 18));
@@ -121,7 +130,6 @@ public class GameGUI extends Application {
         textBox.setLayoutX(550);
         textBox.setLayoutY(710);
 
-
         // Add both VBoxes to a new Pane that is on top of the root Pane
         Pane controlsPane = new Pane();
         controlsPane.setPrefSize(60, 90 );
@@ -129,7 +137,7 @@ public class GameGUI extends Application {
         buttonsAndText.updateCurrentPlayerText();
         Tiles.checkTiles();
         ButtonsAndText.root.getChildren().add(controlsPane);
-
+        
         Scene scene = new Scene(ButtonsAndText.root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Rummikub");

@@ -47,7 +47,7 @@ enum Color {
             case "yellow":
                 return YELLOW;
             case "black":
-                return BLACK;    
+                return BLACK;        
             default:
                 throw new IllegalArgumentException("Invalid color string: " + str);
         }
