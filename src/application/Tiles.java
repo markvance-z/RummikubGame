@@ -7,6 +7,7 @@ public class Tiles {
     private static final int NUM_TILES = 106;
     ArrayList<Tile> tiles;
 
+
     public Tiles() {
         tiles = new ArrayList<Tile>(NUM_TILES);
         for (int i = 1; i <= 13; i++) {
@@ -78,5 +79,7 @@ class Tile {
                 ", number=" + number +
                 ", color=" + color +
                 '}';
+    }
+    public void setOwnerIndex(int i) {
     }
 }

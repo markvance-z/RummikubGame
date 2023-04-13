@@ -46,44 +46,12 @@ public class GameGUI extends Application {
         greenRectangle.setFill(Color.GREEN); // set the fill color to green
         ButtonsAndText.root.getChildren().add(greenRectangle); // add the rectangle to the Pane
 
-        /*
-        //make rectangles for draw area players 1 - 4
-        Rectangle drawBox1 = new Rectangle();
-        drawBox1.setX(440); // x-coordinate of the top-left corner of the rectangle
-        drawBox1.setY(690); // y-coordinate of the top-left corner of the rectangle
-        drawBox1.setWidth(60); // width of the rectangle
-        drawBox1.setHeight(60); // height of the rectangle
-        drawBox1.setFill(Color.rgb(211,211,211)); // set the fill color to grey
-        ButtonsAndText.root.getChildren().add(drawBox1); // add the rectangle to the Pane
-
-        Rectangle drawBox2 = new Rectangle();
-        drawBox2.setX(510); // x-coordinate of the top-left corner of the rectangle
-        drawBox2.setY(105); // y-coordinate of the top-left corner of the rectangle
-        drawBox2.setWidth(60); // width of the rectangle
-        drawBox2.setHeight(60); // height of the rectangle
-        drawBox2.setFill(Color.rgb(211,211,211)); // set the fill color to grey
-        ButtonsAndText.root.getChildren().add(drawBox2); // add the rectangle to the Pane
-
-        Rectangle drawBox3 = new Rectangle();
-        drawBox3.setX(100); // x-coordinate of the top-left corner of the rectangle
-        drawBox3.setY(30); // y-coordinate of the top-left corner of the rectangle
-        drawBox3.setWidth(60); // width of the rectangle
-        drawBox3.setHeight(60); // height of the rectangle
-        drawBox3.setFill(Color.rgb(211,211,211)); // set the fill color to grey
-        ButtonsAndText.root.getChildren().add(drawBox3); // add the rectangle to the Pane
-
-        Rectangle drawBox4 = new Rectangle();
-        drawBox4.setX(30); // x-coordinate of the top-left corner of the rectangle
-        drawBox4.setY(615); // y-coordinate of the top-left corner of the rectangle
-        drawBox4.setWidth(60); // width of the rectangle
-        drawBox4.setHeight(60); // height of the rectangle
-        drawBox4.setFill(Color.rgb(211,211,211)); // set the fill color to grey
-        ButtonsAndText.root.getChildren().add(drawBox4); // add the rectangle to the Pane
-        */
-
         // Add buttons to a VBox
         Button drawTileButton = new Button("Draw Tile");
-        drawTileButton.setOnAction(event -> buttonsAndText.drawTile());
+        drawTileButton.setOnAction(event -> {
+            ArrayList<Tile> currentPlayerHand = ButtonsAndText.getCurrentPlayerHand();
+            buttonsAndText.drawTile(currentPlayerHand);
+        });
 
         Button resetButton = new Button("Reset Game");
         resetButton.setOnAction(event -> buttonsAndText.resetGame());
@@ -96,7 +64,7 @@ public class GameGUI extends Application {
 
         Button sortTilesButton = new Button("Sort Tiles");
         sortTilesButton.setOnAction(event -> {
-            ArrayList<Tile> currentPlayerHand = buttonsAndText.getCurrentPlayerHand();
+            ArrayList<Tile> currentPlayerHand = ButtonsAndText.getCurrentPlayerHand();
             buttonsAndText.sortPlayerTiles(currentPlayerHand);
         });
 

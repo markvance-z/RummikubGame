@@ -11,37 +11,32 @@ import java.awt.Point;
 
 public class ButtonsAndText {
     
-    private int currentPlayerIndex = 1;
+    private static int currentPlayerIndex = 1;
     Text currentPlayerText;
     Text tilesRemainText;
     int gameStarted = 0;
     public static Pane root = new Pane();
     private ArrayList<Tile> tiles;
-    private ArrayList<Tile> player1Hand = new ArrayList<>();
-    private ArrayList<Tile> player2Hand = new ArrayList<>();
-    private ArrayList<Tile> player3Hand = new ArrayList<>();
-    private ArrayList<Tile> player4Hand = new ArrayList<>();
+    public static ArrayList<Tile> player1Hand = new ArrayList<>();
+    public static ArrayList<Tile> player2Hand = new ArrayList<>();
+    public static ArrayList<Tile> player3Hand = new ArrayList<>();
+    public static ArrayList<Tile> player4Hand = new ArrayList<>();
 
     private ArrayList<TileBox> tileBoxes = new ArrayList<>();
     private SoundPlayer soundPlayer = new SoundPlayer();
-    private Point[] drawPositions = {
-        new Point(440, 690),        //player 1 draw location
-        new Point(510, 105),       //player 2 draw location
-        new Point(100, 30),          //player 3 draw location
-        new Point(30, 615)           //player 4 draw location
-    };
 
     public void startGame() {
         gameStarted = 1;
         Tiles rummikub = new Tiles();
         tiles = rummikub.getTiles();
+
         if(!tiles.isEmpty()) {
             // Give each player 14 tiles and line them up
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 14; j++) {
                     Tile tile = tiles.remove(0);
                     TileBox tileBox = new TileBox(tile, tileBoxes, i);
-                    Point initialPosition = getInitialPosition(i, j);
+                    Point initialPosition = getInitialPosition(i, j, 14);
                     tileBox.setTranslateX(initialPosition.getX());
                     tileBox.setTranslateY(initialPosition.getY());
                     root.getChildren().add(tileBox);
@@ -80,17 +75,11 @@ public class ButtonsAndText {
         }
     }
     
-    public void drawTile() {
+    public void drawTile(ArrayList<Tile> currentPlayerHand) {
         if (gameStarted == 1) {
             // check if there are any tiles left in the ArrayList
             if (!tiles.isEmpty()) {
                 Tile tile = tiles.remove(0); // remove the first tile from the ArrayList
-                TileBox tileBox = new TileBox(tile, tileBoxes, currentPlayerIndex - 1);
-                Point drawPosition = drawPositions[currentPlayerIndex - 1];
-                tileBox.setTranslateX(drawPosition.getX());
-                tileBox.setTranslateY(drawPosition.getY());
-                root.getChildren().add(tileBox);
-                tileBoxes.add(tileBox);
                 System.out.println("Player " + currentPlayerIndex + " has drawn a tile");
                 
                 // Add the drawn tile to the corresponding player hand
@@ -110,6 +99,28 @@ public class ButtonsAndText {
                 }
                 checkTiles(); // call checkTiles() method to print the number of remaining tiles
                 soundPlayer.tileSound();
+                
+            }
+            Iterator<TileBox> iterator = tileBoxes.iterator();
+                while (iterator.hasNext()) {
+                    TileBox tileBox = iterator.next();
+                    int ownerIndex = tileBox.getOwnerIndex(); // get the index of the owner player of the tileBox
+                    if (ownerIndex == currentPlayerIndex - 1) {
+                        iterator.remove();
+                        root.getChildren().remove(tileBox);
+                        System.out.println("Removed TileBox with owner index: " + ownerIndex);
+            }
+        }
+        
+            // Create new TileBox objects for each tile in the sorted list and add them to the root
+            for (int i = 0; i < currentPlayerHand.size(); i++) {
+                Tile tile = currentPlayerHand.get(i);
+                TileBox tileBox = new TileBox(tile, tileBoxes, currentPlayerIndex - 1);
+                Point initialPosition = getInitialPosition(currentPlayerIndex - 1, i, 14);
+                tileBox.setTranslateX(initialPosition.getX());
+                tileBox.setTranslateY(initialPosition.getY());
+                root.getChildren().add(tileBox);
+                tileBoxes.add(tileBox);
             }
         }
     }
@@ -118,7 +129,9 @@ public class ButtonsAndText {
         // Clear the tileBoxes ArrayList and remove all TileBox objects from the root pane
         tileBoxes.clear();
         root.getChildren().removeIf(node -> node instanceof TileBox);
-    
+        currentPlayerIndex = 1;
+        updateCurrentPlayerText();
+
         // Clear the tiles ArrayList and create a new set of tiles
         tiles.clear();
         Tiles rummikub = new Tiles();
@@ -150,10 +163,10 @@ public class ButtonsAndText {
         // Get the current player's hand
     }
 
-    public int getCurrentPlayerIndex() {
+    public static int getCurrentPlayerIndex() {
         return currentPlayerIndex;
     }
-    public ArrayList<Tile> getCurrentPlayerHand() {
+    public static ArrayList<Tile> getCurrentPlayerHand() {
         ArrayList<Tile> currentPlayerHand = null;
         switch (currentPlayerIndex-1) {
             case 0:
@@ -172,24 +185,29 @@ public class ButtonsAndText {
         return currentPlayerHand;
     }
 
-    public Point getInitialPosition(int playerIndex, int tileIndex) {
+    public Point getInitialPosition(int playerIndex, int tileIndex, int maxTilesPerRowOrColumn) {
         int x = 0, y = 0;
+        
         switch (playerIndex) {
             case 0: // Bottom
-                x = 240 + 30 * tileIndex;
-                y = 785;
+                maxTilesPerRowOrColumn = 14;
+                x = 240 + 30 * (tileIndex % maxTilesPerRowOrColumn);
+                y = 785 + 40 * (tileIndex / maxTilesPerRowOrColumn);
                 break;
             case 1: // Right
-                x = 785;
-                y = 690 - 40 * tileIndex;
+                maxTilesPerRowOrColumn = 14;
+                x = 785 + 30 * (tileIndex / maxTilesPerRowOrColumn);
+                y = 690 - 40 * (tileIndex % maxTilesPerRowOrColumn);
                 break;
             case 2: // Top
-                x = 630 - 30 * tileIndex;
-                y = 75;
+                maxTilesPerRowOrColumn = 14;
+                x = 630 - 30 * (tileIndex % maxTilesPerRowOrColumn);
+                y = 75 - 40 * (tileIndex / maxTilesPerRowOrColumn);
                 break;
             case 3: // Left
-                x = 85;
-                y = 170 + 40 * tileIndex;
+                maxTilesPerRowOrColumn = 14;
+                x = 85 - 30 * (tileIndex / maxTilesPerRowOrColumn);
+                y = 170 + 40 * (tileIndex % maxTilesPerRowOrColumn);
                 break;
         }
         return new Point(x, y);
@@ -229,6 +247,7 @@ public class ButtonsAndText {
                 }
             }
         };
+
         Collections.sort(currentPlayerHand, tileComparator);
         System.out.println("Player " + currentPlayerIndex + " tiles sorted. Result:");
         System.out.println(currentPlayerHand);
@@ -241,7 +260,7 @@ public class ButtonsAndText {
             if (ownerIndex == currentPlayerIndex - 1) {
                 iterator.remove();
                 root.getChildren().remove(tileBox);
-                System.out.println("Removed TileBox with owner index: " + ownerIndex);
+                //System.out.println("Removed TileBox with owner index: " + ownerIndex);
             }
         }
         
@@ -249,7 +268,7 @@ public class ButtonsAndText {
         for (int i = 0; i < currentPlayerHand.size(); i++) {
             Tile tile = currentPlayerHand.get(i);
             TileBox tileBox = new TileBox(tile, tileBoxes, currentPlayerIndex - 1);
-            Point initialPosition = getInitialPosition(currentPlayerIndex - 1, i);
+            Point initialPosition = getInitialPosition(currentPlayerIndex - 1, i, 14);
             tileBox.setTranslateX(initialPosition.getX());
             tileBox.setTranslateY(initialPosition.getY());
             root.getChildren().add(tileBox);
@@ -277,4 +296,6 @@ public class ButtonsAndText {
         }
         return Integer.compare(tile1.getNumber(), tile2.getNumber());
     }
+    
+    
 }
