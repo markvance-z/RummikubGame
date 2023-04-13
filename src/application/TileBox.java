@@ -118,18 +118,5 @@ public class TileBox extends Pane implements Comparable<TileBox> {
     private EventHandler<MouseEvent> mouseReleasedHandler = event -> {
         isDragging = false;
         soundPlayer.tileSound();
-
-        // Check if the tile is inside the specified area
-        if (event.getSceneX() >= 120 && event.getSceneX() <= 750 &&
-        event.getSceneY() >= 120 && event.getSceneY() <= 740) {
-            //removeTileFromHand();
-        } else {
-            //tileBox.setTranslateX(initialTileX);
-            //tileBox.setTranslateY(initialTileY);
-            return;
-        }
-        event.consume();
-        System.out.println(ownerIndex + " has played a tile on the board");
-        
     };
 }

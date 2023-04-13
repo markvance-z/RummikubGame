@@ -1,4 +1,4 @@
-# RummikubGame
+:::Rummikub Game:::
 
 Hello, welcome to me trying to make Rummikub in Java! 
 
@@ -9,4 +9,3 @@ Thank you!
 
 Mark Vance
 o7
-

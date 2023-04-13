@@ -214,11 +214,11 @@ public class ButtonsAndText {
     }
     
     public void checkTiles() {
-        System.out.println("Tiles Remaining: " + tiles.size());
-        System.out.println("Player 1 Hand: " + player1Hand.size());
-        System.out.println("Player 2 Hand: " + player2Hand.size());
-        System.out.println("Player 3 Hand: " + player3Hand.size());
-        System.out.println("Player 4 Hand: " + player4Hand.size());
+        //System.out.println("Tiles Remaining: " + tiles.size());
+        //System.out.println("Player 1 Hand: " + player1Hand.size());
+        //System.out.println("Player 2 Hand: " + player2Hand.size());
+        //System.out.println("Player 3 Hand: " + player3Hand.size());
+        //System.out.println("Player 4 Hand: " + player4Hand.size());
         tilesRemainText.setText("Tiles Remaining: " + tiles.size());
     }
 

@@ -80,6 +80,4 @@ class Tile {
                 ", color=" + color +
                 '}';
     }
-    public void setOwnerIndex(int i) {
-    }
 }
